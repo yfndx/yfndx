@@ -30,4 +30,4 @@ https://github.com/yfndx/yfndx/issues
 # Homepage
 Visit the homepage of this project:
 
-https://github.com/yfndx/yfndx
+https://github.com/yfndx/yfndx-tea
