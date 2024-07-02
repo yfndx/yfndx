@@ -1,7 +1,7 @@
 {
   "name": "yfndx",
   "version": "1.1.9", 
-  "private":"false",
+  "private": "false",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
