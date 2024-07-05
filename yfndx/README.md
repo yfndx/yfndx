@@ -29,9 +29,6 @@ This project is licensed under the [ISC License](https://github.com/yfndx/yfndx/
 
 ### Contact
 If you have any questions or issues, please open an issue on our [GitHub repository](https://github.com/yfndx/yfndx/issues).
-   ```rush
-   
-This README.md provides clear instructions for the dependency checker, and includes sections for contribution, license, and contact information. You can further customize it according to your project's specific requirements.
-   ```
+
 
 
