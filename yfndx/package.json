@@ -1,10 +1,10 @@
 {
   "name": "yfndx",
   "version": "1.2.0",
-  "main": "bot.js",
+  "main": "index.js",
   "scripts": {
     "check-deps": "ncu -u && snyk test",
-    "start": "node bot.js"
+    "start": "node index.js"
   },
   "dependencies": {
     "dotenv": "^16.4.5",
