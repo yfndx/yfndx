@@ -153,5 +153,10 @@ bot.launch().then(() => {
 // Graceful stop
 process.once('SIGINT', () => bot.stop('SIGINT'));
 process.once('SIGTERM', () => bot.stop('SIGTERM'));
+```
+### Contributing
+Feel free to open issues or submit pull requests for any improvements or new features.
+### License
+This project is licensed under the MIT License.
 
 
