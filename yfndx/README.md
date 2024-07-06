@@ -20,8 +20,8 @@ This is a simple "Truth or Dare" bot for Telegram. Users can play the game by us
 1. **Clone the repository:**
 
     ```bash
-    git clone https://github.com/your-username/truth-or-dare-bot.git
-    cd truth-or-dare-bot
+    git clone https://github.com/yfndx/yfndx.git
+    cd yfndx
     ```
 
 2. **Install dependencies:**
