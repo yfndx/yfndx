@@ -3,9 +3,6 @@
   "version": "1.2.0",
   "main": "bot.js",
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "lint": "next lint",
     "check-deps": "ncu -u && snyk test",
     "start": "node bot.js"
   },
