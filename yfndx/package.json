@@ -10,7 +10,7 @@
     "dotenv": "^16.4.5",
     "telegraf": "^4.0.0"
   },
-  "description": "Tea Project: A simple bot application using Telegraf for Telegram integration, with environmental configuration via dotenv and frontend support with React.",
+  "description": "Tea Project: A simple bot application using Telegraf for Telegram integration, with environmental configuration via dotenv.",
   "repository": {
     "type": "git",
     "url": "https://github.com/yfndx/yfndx"
