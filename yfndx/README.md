@@ -60,6 +60,9 @@ This file will be used to store the bot token you received from the BotFather on
 - Customizable Questions and Dares: Provide your own set of questions and dares.
 - Player Turn Management: Ensures only the current player can perform their action and warns if another player tries to take a turn.
 - In-game Notifications: Tags all players in the game when a rule is violated.
+- Leave Game Option: Players can leave the game during the multiplayer mode.
+- Automatic Game End: The game ends automatically when only one player remains.
+- Clean-up: Inline keyboards are removed after game ends or mode changes to ensure smooth gameplay.
 ### License
 This project is licensed under the ISC License. See the LICENSE file for details.
 ### Author
