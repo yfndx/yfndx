@@ -30,9 +30,11 @@ function createTruthOrDareBot(token, customQuestions, customDares) {
     let joinMessageId = null;
 
     bot.start(async (ctx) => {
-        await ctx.reply(`Hello! I'm your Truth or Dare bot. Choose game mode:`, Markup.keyboard([
-            ['Single Player', 'Multiplayer']
-        ]).resize());
+        await ctx.reply(`Hello! I'm your Truth or Dare bot. Choose game mode:`, Markup.removeKeyboard());
+        await ctx.reply(`Please choose a mode:`, Markup.inlineKeyboard([
+            Markup.button.callback('Single Player', 'single_player'),
+            Markup.button.callback('Multiplayer', 'multiplayer')
+        ]));
     });
 
     bot.hears('Single Player', async (ctx) => {
@@ -65,10 +67,12 @@ function createTruthOrDareBot(token, customQuestions, customDares) {
     bot.action('join', async (ctx) => {
         const userId = ctx.from.id;
         const username = ctx.from.username || ctx.from.first_name;
+        const userTag = `@${username}`;
         if (multiplayerParticipants.find(p => p.id === userId)) {
             await ctx.reply('You have already joined the game.');
         } else {
             multiplayerParticipants.push({ id: userId, username });
+            await ctx.reply(`${userTag} has joined the game.`);
             if (joinMessageId) {
                 try {
                     await ctx.telegram.deleteMessage(ctx.chat.id, joinMessageId);
@@ -76,7 +80,7 @@ function createTruthOrDareBot(token, customQuestions, customDares) {
                     console.error('Error deleting message:', error.message);
                 }
             }
-            const message = await ctx.reply(`Current players: ${multiplayerParticipants.map(p => p.username).join(', ')}. More players can join by pressing 'Join Game'.`, Markup.inlineKeyboard([
+            const message = await ctx.reply(`Current players: ${multiplayerParticipants.map(p => `@${p.username}`).join(', ')}. More players can join by pressing 'Join Game'.`, Markup.inlineKeyboard([
                 Markup.button.callback('Join Game', 'join'),
                 Markup.button.callback('Start Game', 'startgame'),
                 Markup.button.callback('Change Mode', 'change_mode')
@@ -92,6 +96,26 @@ function createTruthOrDareBot(token, customQuestions, customDares) {
         } else {
             currentPlayerIndex = 0;
             await ctx.reply('Starting the game with all players.');
+            await ctx.editMessageReplyMarkup(); // Remove inline keyboard
+            await nextTurn(ctx);
+        }
+        await ctx.answerCbQuery(); // Answer the callback query (optional)
+    });
+
+    bot.action('leave', async (ctx) => {
+        const userId = ctx.from.id;
+        const username = ctx.from.username || ctx.from.first_name;
+        const userTag = `@${username}`;
+        multiplayerParticipants = multiplayerParticipants.filter(p => p.id !== userId);
+        await ctx.reply(`${userTag} has left the game.`);
+        if (multiplayerParticipants.length < 2) {
+            await ctx.reply(`Only one player remaining. The game is ending.`);
+            await ctx.editMessageReplyMarkup(); // Remove inline keyboard
+            multiplayerParticipants = [];
+        } else {
+            if (currentPlayerIndex >= multiplayerParticipants.length) {
+                currentPlayerIndex = 0;
+            }
             await nextTurn(ctx);
         }
         await ctx.answerCbQuery(); // Answer the callback query (optional)
@@ -103,14 +127,16 @@ function createTruthOrDareBot(token, customQuestions, customDares) {
 
         if (truthOrDare === 'Truth') {
             const truth = getRandomItem(questions);
-            await ctx.reply(`Truth for ${currentPlayer.username}: ${truth}`, Markup.inlineKeyboard([
+            await ctx.reply(`Truth for @${currentPlayer.username}: ${truth}`, Markup.inlineKeyboard([
                 Markup.button.callback('Next Player', 'next_player'),
+                Markup.button.callback('Leave', 'leave'),
                 Markup.button.callback('Change Mode', 'change_mode')
             ]));
         } else {
             const dare = getRandomItem(dares);
-            await ctx.reply(`Dare for ${currentPlayer.username}: ${dare}`, Markup.inlineKeyboard([
+            await ctx.reply(`Dare for @${currentPlayer.username}: ${dare}`, Markup.inlineKeyboard([
                 Markup.button.callback('Next Player', 'next_player'),
+                Markup.button.callback('Leave', 'leave'),
                 Markup.button.callback('Change Mode', 'change_mode')
             ]));
         }
@@ -141,10 +167,21 @@ function createTruthOrDareBot(token, customQuestions, customDares) {
                 console.error('Error deleting message:', error.message);
             }
         }
-        await ctx.editMessageText('You have chosen to change mode. Select another mode:', Markup.inlineKeyboard([
-            Markup.button.callback('Single Player', 'single_player'),
-            Markup.button.callback('Multiplayer', 'multiplayer')
-        ]));
+        try {
+            await ctx.editMessageText('You have chosen to change mode. Select another mode:', Markup.inlineKeyboard([
+                Markup.button.callback('Single Player', 'single_player'),
+                Markup.button.callback('Multiplayer', 'multiplayer')
+            ]));
+        } catch (error) {
+            if (error.description === 'Bad Request: message to edit not found') {
+                await ctx.reply('You have chosen to change mode. Select another mode:', Markup.inlineKeyboard([
+                    Markup.button.callback('Single Player', 'single_player'),
+                    Markup.button.callback('Multiplayer', 'multiplayer')
+                ]));
+            } else {
+                console.error('Unexpected error:', error.message);
+            }
+        }
         await ctx.answerCbQuery(); // Answer the callback query (optional)
     });
 
