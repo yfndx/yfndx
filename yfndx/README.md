@@ -54,6 +54,12 @@ You need to create a .env file in the root directory of your project with the fo
 BOT_TOKEN=your-telegram-bot-token
 ```
 This file will be used to store the bot token you received from the BotFather on Telegram.
+### Features
+- Single Player Mode: Play alone by choosing between Truth and Dare.
+- Multiplayer Mode: Play with friends. Players can join the game, and the bot will manage turns automatically.
+- Customizable Questions and Dares: Provide your own set of questions and dares.
+- Player Turn Management: Ensures only the current player can perform their action and warns if another player tries to take a turn.
+- In-game Notifications: Tags all players in the game when a rule is violated.
 ### License
 This project is licensed under the ISC License. See the LICENSE file for details.
 ### Author
