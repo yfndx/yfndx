@@ -64,6 +64,6 @@ This file will be used to store the bot token you received from the BotFather on
 - Automatic Game End: The game ends automatically when only one player remains.
 - Clean-up: Inline keyboards are removed after game ends or mode changes to ensure smooth gameplay.
 ### License
-This project is licensed under the ISC License. See the LICENSE file for details.
+This project is licensed under the ISC License. See the [LICENSE](https://github.com/yfndx/yfndx/blob/main/yfndx/LICENSE) file for details.
 ### Author
 YFNDX
