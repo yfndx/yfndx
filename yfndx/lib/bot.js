@@ -121,7 +121,7 @@ function createTruthOrDareBot(token, customQuestions, customDares) {
         // Check if only one player left, end the game
         if (multiplayerParticipants.length === 1) {
             await ctx.reply(`Game ended because ${getParticipantTags(multiplayerParticipants)} is the only player left.`);
-            await ctx.reply(`/start@lapinESPDbot bot to play again`);
+            await ctx.reply(`/start@lapinESPDbot bot to play again!`);
             resetGame();
         }
 
@@ -146,7 +146,7 @@ function createTruthOrDareBot(token, customQuestions, customDares) {
             await askTruthOrDare(ctx);
         } else {
             await ctx.reply('Game ended because only one player left.');
-            await ctx.reply(`/start@lapinESPDbot bot to play again`);
+            await ctx.reply(`/start@lapinESPDbot bot to play again!`);
             resetGame();
         }
     }
