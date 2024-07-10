@@ -1,6 +1,6 @@
 {
   "name": "yfndx",
-  "version": "1.2.4",
+  "version": "1.2.6",
   "main": "index.js",
   "scripts": {
     "check-deps": "ncu -u && snyk test",
